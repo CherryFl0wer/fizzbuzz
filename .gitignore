@@ -1,0 +1,5 @@
+version.txt
+coverage.txt
+.deps
+.idea
+repository/mock

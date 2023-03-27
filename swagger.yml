@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  title: Fizzbuzz API
+  version: 1.0.0
+servers:
+  - url: localhost:8080
+    description: Dev env
+paths:
+  /fizzbuzz:
+    post:
+      summary: Return an array of limit size containing numbers in string 'fizzbuzzed'
+      description: Follow fizzbuzz rule
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FizzBuzz'
+      responses:
+        '200':    # status code
+          description: A JSON array of numbers in strings from 0 to limit
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Some parameters are incorrects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /metrics:
+    get:
+      summary: return most requested /fizzbuzz
+      description: return the score (numbers of call) and the request
+      responses:
+        '200':
+          description: A metric has been found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+
+components:
+  schemas:
+    FizzBuzz:
+      type: object
+      required:
+        - fst_mod
+        - snd_mod
+        - limit
+        - fst_str
+        - snd_str
+      properties:
+        fst_mod:
+          type: integer
+        snd_mod:
+          type: integer
+        limit:
+          type: integer
+        fst_str:
+          type: string
+        snd_str:
+          type: string
+    Metric:
+      type: object
+      properties:
+        score:
+          type: integer
+        request:
+          $ref: '#/components/schemas/FizzBuzz'
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorFieldItem'
+    ErrorFieldItem:
+      type: object
+      properties:
+        message:
+          type: string
+        field-name:
+          type: string
+
+  responses:
+    ErrorResponse:
+      description: An typical error response in this api
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

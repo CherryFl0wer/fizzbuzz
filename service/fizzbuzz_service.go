@@ -1,5 +1,7 @@
 package service
 
+//go:generate ../.deps/mockgen -destination mock/fizzbuzz_service.go -source fizzbuzz_service.go
+
 import (
 	"strconv"
 

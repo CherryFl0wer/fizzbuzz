@@ -15,11 +15,14 @@ type metricsController struct {
 }
 
 func ParseMetricsError(err error) (int, ErrorResponse) {
-	if errors.Is(err, service.ErrMetricsNoRequestFound) ||
-		errors.Is(err, service.ErrMetricsNoCountersFound) ||
+	if errors.Is(err, service.ErrMetricsNoCountersFound) ||
 		errors.Is(err, service.ErrMetricsNoDataFound) {
 		return http.StatusNoContent, ErrorResponse{
 			Message: "No data was found for top metric",
+		}
+	} else if errors.Is(err, service.ErrMetricsNoRequestFound) {
+		return http.StatusInternalServerError, ErrorResponse{
+			Message: "Data has been corrupted",
 		}
 	}
 
@@ -41,5 +44,6 @@ func (mc *metricsController) Index(ctx *gin.Context) {
 		ctx.JSON(code, errResp)
 		return
 	}
+
 	ctx.JSON(http.StatusOK, res)
 }

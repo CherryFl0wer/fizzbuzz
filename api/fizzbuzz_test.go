@@ -13,7 +13,7 @@ import (
 	"testing"
 )
 
-type FizzBuzzIntegrationSuite struct {
+type FizzBuzzControllerSuite struct {
 	suite.Suite
 	logger        *zap.Logger
 	ctrl          *gomock.Controller
@@ -23,7 +23,7 @@ type FizzBuzzIntegrationSuite struct {
 	ms            service.MetricService
 }
 
-func (suite *FizzBuzzIntegrationSuite) SetupSuite() {
+func (suite *FizzBuzzControllerSuite) SetupSuite() {
 	var err error
 	suite.logger = zap.NewExample()
 	suite.ctrl = gomock.NewController(suite.T())
@@ -36,7 +36,7 @@ func (suite *FizzBuzzIntegrationSuite) SetupSuite() {
 	suite.Require().NoError(err)
 }
 
-func (suite *FizzBuzzIntegrationSuite) TestFizzbuzzJsonRequest() {
+func (suite *FizzBuzzControllerSuite) TestFizzbuzzJsonRequest() {
 	tests := []struct {
 		name           string
 		body           string
@@ -119,6 +119,6 @@ func (suite *FizzBuzzIntegrationSuite) TestFizzbuzzJsonRequest() {
 	}
 }
 
-func TestFizzBuzzIntegrationSuite(t *testing.T) {
-	suite.Run(t, new(FizzBuzzIntegrationSuite))
+func TestFizzBuzzControllerSuite(t *testing.T) {
+	suite.Run(t, new(FizzBuzzControllerSuite))
 }

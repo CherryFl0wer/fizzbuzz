@@ -37,11 +37,11 @@ Run can be made by running `make start` which will build the image of the app an
 - [X] Return top requested fizzbuzz request on a `GET /metrics` 
 - [X] Metrics for the app exported to prom
 - [X] Simple swagger 
-- [X] Partials Tests
+- [X] Tests
 
 ### Missing
 - [ ] Dashboard with alert
 - [ ] Integration Tests for api
 - [ ] Swagger complete integration with tests
 - [ ] Healthcheck for app 
-- [ ] No tests for metric service and metrics controller
+- [ ] No tests for metric service

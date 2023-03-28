@@ -23,8 +23,8 @@ func (mcs MetricCountersScores) Counters() []int {
 	return counters
 }
 
-type MetricCount[T any] struct {
-	Key     string `json:"-"`
-	Score   int    `json:"counter"`
-	Request T      `json:"request"`
+type MetricCountFizzBuzz struct {
+	Key     string          `json:"-"`
+	Score   int             `json:"counter"`
+	Request FizzBuzzRequest `json:"request"`
 }

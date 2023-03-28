@@ -1,6 +1,6 @@
 VERSION = $(shell git describe --tag --always --dirty)
 PROJECT := fizzbuzz
-MOCKS := $(shell grep -l 'go:generate' repository/*.go | sed -e "s?repository/\(.*\).go?repository/mock/\1.go?" )
+MOCKS := $(shell grep -l 'go:generate' repository/*.go | sed -e "s?repository/\(.*\).go?repository/mock/\1.go?") $(shell grep -l 'go:generate' service/*.go | sed -e "s?service/\(.*\).go?service/mock/\1.go?")
 GOLANGCI := .deps/golangci-lint
 TESTTIMEOUT := 60s
 

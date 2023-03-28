@@ -1,5 +1,7 @@
 package service
 
+//go:generate ../.deps/mockgen -destination mock/metric_service.go -source metric_service.go
+
 import (
 	"FizzBuzz/domain"
 	"FizzBuzz/repository"
@@ -18,7 +20,7 @@ var (
 
 type MetricService interface {
 	Increment(request domain.ToBytes) error
-	MostRequested() (*domain.MetricCount[domain.FizzBuzzRequest], error)
+	MostRequested() (*domain.MetricCountFizzBuzz, error)
 }
 
 type metricService struct {
@@ -43,7 +45,7 @@ func (ms *metricService) Increment(request domain.ToBytes) error {
 	return nil
 }
 
-func (ms *metricService) MostRequested() (*domain.MetricCount[domain.FizzBuzzRequest], error) {
+func (ms *metricService) MostRequested() (*domain.MetricCountFizzBuzz, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
 	defer cancel()
 	counter, err := ms.cacheRepo.GetCounters(ctx, -1, -1)
@@ -57,7 +59,7 @@ func (ms *metricService) MostRequested() (*domain.MetricCount[domain.FizzBuzzReq
 		return nil, ErrMetricsNoCountersFound
 	}
 
-	mcfbr := domain.MetricCount[domain.FizzBuzzRequest]{
+	mcfbr := domain.MetricCountFizzBuzz{
 		Key:   counter[0].Key,
 		Score: counter[0].ScoreCounter,
 	}
